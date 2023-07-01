@@ -21,6 +21,7 @@ This repository contains my solutions and write-ups for various Capture The Flag
 - [CTF { Steel Mountain }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Steel%20Mountain%20%7D.md)
 - [CTF { Vulnversity }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Vulnversity%20%7D.md)
 - [CTF {Basic Malware RE}](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7BBasic%20Malware%20RE%7D.md)
+- [CTF { The Greenholt Phish }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20The%20Greenholt%20Phish%20%7D.md)
 - ...
 
 Feel free to explore the challenges and their corresponding write-ups to learn more about the techniques and strategies used to solve them.
