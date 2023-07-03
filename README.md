@@ -6,23 +6,24 @@ This repository contains my solutions and write-ups for various Capture The Flag
 
 - [CTF { Alfred }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Alfred%20%7D.md)
 - [CTF { Attacktive Directory }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Attacktive%20Directory%20%7D.md)
+- [CTF { Basic Malware RE }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7BBasic%20Malware%20RE%7D.md)
 - [CTF { Blue }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Blue%20%7D.md)
 - [CTF { Cyborg }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Cyborg%20%7D.md)
 - [CTF { Daily Bugle }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Daily%20Bugle%20%7D.md)
 - [CTF { Game Zone }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Game%20Zone%20%7D.md)
+- [CTF { HackPark }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20HackPark%20%7D.md)
 - [CTF { Ice }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Ice%20%7D.md)
 - [CTF { Kenobi }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Kenobi%20%7D.md)
 - [CTF { Net Sec Challenge }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Net%20Sec%20Challenge%20%7D.md)
 - [CTF { OverPass }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Overpass%20%7D.md)
 - [CTF { Overpass 2 - Hacked }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Overpass%202%20-%20Hacked%20%7D.md)
-- [CTF { HackPark }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20HackPark%20%7D.md)
 - [CTF { Pickle Rick }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Pickle%20Rick%20%7D.md)
 - [CTF { Relevant }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Relevant%20%7D.md)
 - [CTF { Skynet }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Skynet%20%7D.md)
 - [CTF { Steel Mountain }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Steel%20Mountain%20%7D.md)
-- [CTF { Vulnversity }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Vulnversity%20%7D.md)
-- [CTF {Basic Malware RE}](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7BBasic%20Malware%20RE%7D.md)
 - [CTF { The Greenholt Phish }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20The%20Greenholt%20Phish%20%7D.md)
+- [CTF { Vulnversity }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Vulnversity%20%7D.md)
+- [CTF { tomghost }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20tomghost%20%7D.md)
 - ...
 
 Feel free to explore the challenges and their corresponding write-ups to learn more about the techniques and strategies used to solve them.
