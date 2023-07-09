@@ -65,11 +65,11 @@ HOP RTT      ADDRESS
 2   71.57 ms 10.10.219.70
 ```
 
-Also did a scan with enum4linux.
+Also did a scan with [enum4linux](https://www.kali.org/tools/enum4linux/).
 
 #### Enumerating Users via Kerberos 
 
-A whole host of other services are running, including Kerberos. Kerberos is a key authentication service within Active Directory. With this port open, we can use a tool called Kerbrute (by Ronnie Flathers @ropnop) to brute force discovery of users, passwords and even password spray!
+A whole host of other services are running, including Kerberos. Kerberos is a key authentication service within Active Directory. With this port open, we can use a tool called [Kerbrute](https://github.com/ropnop/kerbrute) (by Ronnie Flathers @ropnop) to brute force discovery of users, passwords and even password spray!
 
 I downloaded the package for github, added executable rights with `chmod +x [file name]`
 and run it.
@@ -164,7 +164,7 @@ Now that we have new user account credentials, we may have more privileges on th
 
 Well, it is the backup account for the Domain Controller. This account has a unique permission that allows all Active Directory changes to be synced with this user account. This includes password hashes
 
-Knowing this, we can use another tool within Impacket called "secretsdump.py". This will allow us to retrieve all of the password hashes that this user account (that is synced with the domain controller) has to offer. Exploiting this, we will effectively have full control over the AD Domain.
+Knowing this, we can use another tool within Impacket called [secretsdump.py](https://github.com/fortra/impacket/blob/master/examples/secretsdump.py). This will allow us to retrieve all of the password hashes that this user account (that is synced with the domain controller) has to offer. Exploiting this, we will effectively have full control over the AD Domain.
 
 I use `secretsdump.py -just-dc backup@[ip]` with the password backup2517860 from last topic and get:
 ```
