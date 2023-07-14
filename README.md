@@ -11,6 +11,7 @@ This repository contains my solutions and write-ups for various Capture The Flag
 - [CTF { Cyborg }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Cyborg%20%7D.md)
 - [CTF { Daily Bugle }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Daily%20Bugle%20%7D.md)
 - [CTF { Game Zone }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Game%20Zone%20%7D.md)
+- [CTF { Git Happens }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Git%20Happens%20%7D.md)
 - [CTF { HackPark }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20HackPark%20%7D.md)
 - [CTF { Ice }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Ice%20%7D.md)
 - [CTF { Internal }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Internal%20%7D.md) 
