@@ -27,7 +27,7 @@ This repository contains my solutions and write-ups for various Capture The Flag
 - [CTF { Steel Mountain }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Steel%20Mountain%20%7D.md)
 - [CTF { The Greenholt Phish }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20The%20Greenholt%20Phish%20%7D.md)
 - [CTF { Vulnversity }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Vulnversity%20%7D.md)
-- [CTF { dogcat }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20dogcat%20%7D.md) - in progress -
+- [CTF { dogcat }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20dogcat%20%7D.md)
 - [CTF { tomghost }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20tomghost%20%7D.md)
 - ...
 
