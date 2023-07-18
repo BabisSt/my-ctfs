@@ -17,6 +17,7 @@ This repository contains my solutions and write-ups for various Capture The Flag
 - [CTF { Internal }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Internal%20%7D.md) 
 - [CTF { Kenobi }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Kenobi%20%7D.md)
 - [CTF { Mr Robot }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Mr%20Robot%20%7D.md)
+- [CTF { Nax }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Nax%20%7D.md) - in progress -
 - [CTF { Net Sec Challenge }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Net%20Sec%20Challenge%20%7D.md)
 - [CTF { OverPass }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Overpass%20%7D.md)
 - [CTF { Overpass 2 - Hacked }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Overpass%202%20-%20Hacked%20%7D.md)
