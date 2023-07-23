@@ -124,3 +124,19 @@ Megapixels                      : 0.980
 The next questions was _If you get an error running the tool on your downloaded image about an unknown ppm format -- open it with gimp or another paint program and export to ppm format, and try again!_
 
 And after a bit of search I found about Piet steganography and tried to decode the image [here](http://www.bertnase.de/npiet/npiet-execute.php)
+And I got
+`nagiosadmin%n3p3UQ&9BjLp4$7uhWdYnagiosadmin%n3p3UQ&9BjLp4$7uhWdYnagiosadmin`
+
+So I get username: nagiosadmin and password: n3p3UQ&9BjLp4$7uhWdY.
+
+Next I need to Find the CVE for Nagios. After some search online I found this `CVE-2019-15949`
+`Nagios XI before 5.6.6 allows remote command execution as root.`
+
+I launch Metasploit and and for this CVE.
+I set rhost,lhost and password , exploit and I am in!
+
+I find my user flag under `/home/galand`
+`THM{84b17add1d72a9f2e99c33bc568ae0f1}`
+
+I am already root from the CVE so I find the root flag under `/root/`
+`THM{c89b2e39c83067503a6508b21ed6e962}`
