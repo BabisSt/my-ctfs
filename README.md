@@ -8,6 +8,7 @@ This repository contains my solutions and write-ups for various Capture The Flag
 - [CTF { Attacktive Directory }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Attacktive%20Directory%20%7D.md)
 - [CTF { Basic Malware RE }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7BBasic%20Malware%20RE%7D.md)
 - [CTF { Blue }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Blue%20%7D.md)
+- [CTF { Brooklyn Nine Nine }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Brooklyn%20Nine%20Nine%20%7D.md)
 - [CTF { Cyborg }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Cyborg%20%7D.md)
 - [CTF { Daily Bugle }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Daily%20Bugle%20%7D.md)
 - [CTF { Game Zone }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Game%20Zone%20%7D.md)
