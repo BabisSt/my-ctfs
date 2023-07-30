@@ -15,6 +15,7 @@ This repository contains my solutions and write-ups for various Capture The Flag
 - [CTF { Git Happens }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Git%20Happens%20%7D.md)
 - [CTF { HackPark }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20HackPark%20%7D.md)
 - [CTF { Ice }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Ice%20%7D.md)
+- [CTF { Ignite }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Ignite%20%7D.md)
 - [CTF { Internal }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Internal%20%7D.md) 
 - [CTF { Kenobi }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Kenobi%20%7D.md)
 - [CTF { Mr Robot }](https://github.com/BabisSt/my-ctfs/blob/main/CTF%20%7B%20Mr%20Robot%20%7D.md)
