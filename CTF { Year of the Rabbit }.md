@@ -64,11 +64,11 @@ Progress: 18163 / 18460 (98.39%)
 
 /assets contain
 
-|Name|Last Modified|Size|Descrption|
-|---|---|---|---|---|
-|Parent Directory||-||
-|RickRolled.mp4|2020-01-23 00:34|384M||
-|style.css|2020-01-23 00:34|2.9K||
+|Parent Directory||-|
+
+|RickRolled.mp4|2020-01-23 00:34|384M|
+
+|style.css|2020-01-23 00:34|2.9K|
 
 ## Access 
 
@@ -91,6 +91,7 @@ Make sure your audio is turned up!
 I disable the plugin and try again, while I look on the network tab I catch this
 `GET http://10.10.16.45/intermediary.php?hidden_directory=/WExYY2Cv-qU`
 which is getting invoked before the load of /sup3r_s3cret_fl4g
+
 So I navigate the and find
 
 Hot_Babe.png|2020-01-23 00:34|464K|
@@ -186,10 +187,13 @@ zLH%Ot0Bw&c%9
 
 So I have the username and a potential password. I save the passwords on a file and I use Hydra to brute-force my entrance on the ftp port with
 `hydra -l ftpuser -P passwords.txt ftp://10.10.16.45`
+
 and get the password
 `[21][ftp] host: 10.10.16.45   login: ftpuser   password: 5iez1wGXKfPKQ`
+
 So I login ftp and find
 `-rw-r--r--    1 0        0             758 Jan 23  2020 Eli's_Creds.txt`
+
 I get the find and print it
 
 ```
